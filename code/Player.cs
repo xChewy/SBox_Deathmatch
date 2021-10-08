@@ -42,7 +42,8 @@ namespace ChewyDeathmatch
 
 			Clothing.DressEntity( this );
 
-			Inventory.Add( new Pistol(), true );
+			Inventory.Add( new SMG(), true );
+			Inventory.Add( new Pistol() );
 
 			base.Respawn();
 		}
@@ -52,6 +53,16 @@ namespace ChewyDeathmatch
 			base.Simulate( cl );
 
 			SimulateActiveChild( cl, ActiveChild );
+
+			if ( IsServer && Input.Pressed( InputButton.Slot1 ) )
+			{
+				Inventory.SetActiveSlot( 0, false );
+			}
+
+			if ( IsServer && Input.Pressed( InputButton.Slot2 ) )
+			{
+				Inventory.SetActiveSlot( 1, false );
+			}
 		}
 
 		public override void OnKilled()
