@@ -4,8 +4,12 @@ using Sandbox;
 
 public partial class Weapon : BaseWeapon, IUse
 {
-	public virtual float ReloadTime => 3.0f;
+	public virtual int MaxAmmoCount => 10;
+	public virtual float ReloadTime => 5.0f;
 
+	[Net, Predicted]
+	public int AmmoCount { get; set; }
+	
 	public PickupTrigger PickupTrigger { get; protected set; }
 
 	[Net, Predicted]
@@ -44,12 +48,15 @@ public partial class Weapon : BaseWeapon, IUse
 		if ( IsReloading )
 			return;
 
-		TimeSinceReload = 0;
-		IsReloading = true;
+		if (AmmoCount < MaxAmmoCount && !IsReloading)
+		{
+			TimeSinceReload = 0;
+			IsReloading = true;
 
-		(Owner as AnimEntity)?.SetAnimBool( "b_reload", true );
+			(Owner as AnimEntity)?.SetAnimBool( "b_reload", true );
 
-		StartReloadEffects();
+			StartReloadEffects();
+		}
 	}
 
 	public override void Simulate( Client owner )
@@ -71,6 +78,7 @@ public partial class Weapon : BaseWeapon, IUse
 	public virtual void OnReloadFinish()
 	{
 		IsReloading = false;
+		AmmoCount = MaxAmmoCount;
 	}
 
 	[ClientRpc]

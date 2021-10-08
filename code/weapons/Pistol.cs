@@ -7,8 +7,10 @@ partial class Pistol : Weapon
 {
 	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";
 
+	public override int MaxAmmoCount => 10;
 	public override float PrimaryRate => 15.0f;
 	public override float SecondaryRate => 1.0f;
+	public override float ReloadTime => 5.0f;
 
 	public TimeSince TimeSinceDischarge { get; set; }
 
@@ -17,6 +19,8 @@ partial class Pistol : Weapon
 		base.Spawn();
 
 		SetModel( "weapons/rust_pistol/rust_pistol.vmdl" );
+
+		AmmoCount = MaxAmmoCount;
 	}
 
 	public override bool CanPrimaryAttack()
@@ -26,6 +30,9 @@ partial class Pistol : Weapon
 
 	public override void AttackPrimary()
 	{
+		if ( AmmoCount == 0 )
+			return;
+
 		TimeSincePrimaryAttack = 0;
 		TimeSinceSecondaryAttack = 0;
 		
@@ -33,7 +40,10 @@ partial class Pistol : Weapon
 
 		ShootEffects();
 		PlaySound( "rust_pistol.shoot" );
+
 		ShootBullet( 0.05f, 1.5f, 9.0f, 3.0f );
+
+		AmmoCount = AmmoCount - 1;
 	}
 
 	private void Discharge()
@@ -66,6 +76,6 @@ partial class Pistol : Weapon
 	{
 		anim.SetParam( "holdtype", 1 );
 		anim.SetParam( "aimat_weight", 1.0f );
-		anim.SetParam( "holdtype_handedness", 0 );
+		anim.SetParam( "holdtype_handedness", 1 );
 	}
 }
