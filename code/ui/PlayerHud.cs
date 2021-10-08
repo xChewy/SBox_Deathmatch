@@ -4,6 +4,10 @@ using Sandbox.UI.Construct;
 
 public class PlayerHud : Panel
 {
+	private Label FragsIcon;
+	private Label Frags;
+	private Label DeathsIcon;
+	private Label Deaths;
 	private Label HealthIcon;
 	private Label Health;
 	private Label AmmoIcon;
@@ -13,8 +17,16 @@ public class PlayerHud : Panel
 	{
 		StyleSheet.Load( "/ui/PlayerHud.scss" );
 
+		Panel fragsBack = Add.Panel( "fragsBG" );
+		Panel deathsBack = Add.Panel( "deathsBG" );
 		Panel healthBack = Add.Panel( "healthBG" );
 		Panel ammoBack = Add.Panel( "ammoBG" );
+
+		FragsIcon = fragsBack.Add.Label( "Kills: ", "text2" );
+		Frags = fragsBack.Add.Label( "0", "text" );
+
+		DeathsIcon = deathsBack.Add.Label( "Deaths: ", "text2" );
+		Deaths = deathsBack.Add.Label( "0", "text" );
 		
 		HealthIcon = healthBack.Add.Label( "Health: ", "healthText" );
 		Health = healthBack.Add.Label( "100", "text" );
@@ -34,7 +46,12 @@ public class PlayerHud : Panel
 
 		if ( weapon == null ) return;
 
+		Frags.Text = $"{Local.Client.GetInt( "Kills" )}";
+
+		Deaths.Text = $"{Local.Client.GetInt( "Deaths" )}";
+
 		Health.Text = $"{Local.Pawn.Health.CeilToInt()}";
+
 		Ammo.Text = $"{weapon.AmmoCount}";
 	}
 }
