@@ -29,6 +29,12 @@ public class PlayerHud : Panel
 
 		if ( Local.Pawn == null ) return;
 
+		var weapon = Local.Pawn.ActiveChild as Weapon;
+		SetClass( "active", weapon != null );
+
+		if ( weapon == null ) return;
+
 		Health.Text = $"{Local.Pawn.Health.CeilToInt()}";
+		Ammo.Text = $"{weapon.AmmoCount}";
 	}
 }
