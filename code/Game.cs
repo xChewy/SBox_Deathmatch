@@ -35,7 +35,7 @@ namespace ChewyDeathmatch
 		{
 			base.ClientJoined( cl );
 
-			var player = new DeathmatchPlayer(cl);
+			var player = new DeathmatchPlayer( cl );
 			cl.Pawn = player;
 
 			player.Respawn();

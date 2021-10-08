@@ -10,7 +10,7 @@ namespace ChewyDeathmatch
 
 		public DeathmatchPlayer()
 		{
-			//
+			Inventory = new Inventory( this );
 		}
 
 		public DeathmatchPlayer( Client cl ) : this()
@@ -42,6 +42,8 @@ namespace ChewyDeathmatch
 
 			Clothing.DressEntity( this );
 
+			Inventory.Add( new Pistol(), true );
+
 			base.Respawn();
 		}
 
@@ -57,6 +59,33 @@ namespace ChewyDeathmatch
 			base.OnKilled();
 
 			EnableDrawing = false;
+
+			Inventory.DeleteContents();
+		}
+
+		[ServerCmd( "inventory_current" )]
+		public static void SetInventoryCurrent( string entName )
+		{
+			var target = ConsoleSystem.Caller.Pawn;
+			if ( target == null ) return;
+
+			var inventory = target.Inventory;
+			if ( inventory == null )
+				return;
+
+			for ( int i = 0; i < inventory.Count(); ++i )
+			{
+				var slot = inventory.GetSlot( i );
+				if ( !slot.IsValid() )
+					continue;
+
+				if ( !slot.ClassInfo.IsNamed( entName ) )
+					continue;
+
+				inventory.SetActiveSlot( i, false );
+
+				break;
+			}
 		}
 	}
 }
