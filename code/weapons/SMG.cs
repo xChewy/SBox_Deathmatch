@@ -23,20 +23,24 @@ partial class SMG : Weapon
 
 	public override void AttackPrimary()
 	{
-		if ( AmmoCount == 0 )
-			return;
+		if ( AmmoCount != 0 )
+		{
+			TimeSincePrimaryAttack = 0;
+			TimeSinceSecondaryAttack = 0;
 
-		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
+			(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
 
-		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
+			ShootEffects();
+			PlaySound( "rust_smg.shoot" );
 
-		ShootEffects();
-		PlaySound( "rust_smg.shoot" );
+			ShootBullet( 0.1f, 1.5f, 8.0f, 3.0f );
 
-		ShootBullet( 0.1f, 1.5f, 5.0f, 3.0f );
-
-		AmmoCount = AmmoCount - 1;
+			AmmoCount = AmmoCount - 1;
+		}
+		else
+		{
+			//PlaySound( "rust_smg.dryfire" );
+		}
 	}
 
 	public override void AttackSecondary()

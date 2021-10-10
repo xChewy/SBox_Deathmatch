@@ -7,6 +7,11 @@ namespace ChewyDeathmatch
 	partial class DeathmatchPlayer : Player
 	{
 		public Clothing.Container Clothing = new();
+		private DamageInfo lastDamage;
+
+		[Net, Predicted] public ICamera MainCamera { get; set; }
+
+		public ICamera LastCamera { get; set; }
 
 		public DeathmatchPlayer()
 		{
@@ -20,6 +25,9 @@ namespace ChewyDeathmatch
 
 		public override void Spawn()
 		{
+			MainCamera = new FirstPersonCamera();
+			LastCamera = MainCamera;
+
 			Clothing.DressEntity( this );
 
 			base.Spawn();
@@ -30,10 +38,10 @@ namespace ChewyDeathmatch
 			SetModel( "models/citizen/citizen.vmdl" );
 
 			Controller = new WalkController();
-
 			Animator = new StandardPlayerAnimator();
 
-			Camera = new FirstPersonCamera();
+			MainCamera = LastCamera;
+			Camera = MainCamera;
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -68,10 +76,35 @@ namespace ChewyDeathmatch
 		public override void OnKilled()
 		{
 			base.OnKilled();
+			
+			LastCamera = MainCamera;
+			MainCamera = new SpectateRagdollCamera();
+			Camera = MainCamera;
+			Controller = null;
 
+			EnableAllCollisions = false;
 			EnableDrawing = false;
 
 			Inventory.DeleteContents();
+		}
+
+		public override void TakeDamage( DamageInfo info )
+		{
+			if ( GetHitboxGroup( info.HitboxIndex ) == 1 )
+			{
+				info.Damage *= 3.0f;
+			}
+
+			lastDamage = info;
+
+			TookDamage( lastDamage.Flags, lastDamage.Position, lastDamage.Force );
+
+			base.TakeDamage( info );
+		}
+
+		[ClientRpc]
+		public void TookDamage( DamageFlags damageFlags, Vector3 forcePos, Vector3 force )
+		{
 		}
 
 		[ServerCmd( "inventory_current" )]

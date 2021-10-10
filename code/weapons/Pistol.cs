@@ -10,7 +10,7 @@ partial class Pistol : Weapon
 	public override int MaxAmmoCount => 10;
 	public override float PrimaryRate => 15.0f;
 	public override float SecondaryRate => 1.0f;
-	public override float ReloadTime => 5.0f;
+	public override float ReloadTime => 3.4f;
 
 	public TimeSince TimeSinceDischarge { get; set; }
 
@@ -30,20 +30,24 @@ partial class Pistol : Weapon
 
 	public override void AttackPrimary()
 	{
-		if ( AmmoCount == 0 )
-			return;
+		if ( AmmoCount != 0 )
+		{
+			TimeSincePrimaryAttack = 0;
+			TimeSinceSecondaryAttack = 0;
+			
+			(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
 
-		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
-		
-		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
+			ShootEffects();
+			PlaySound( "rust_pistol.shoot" );
 
-		ShootEffects();
-		PlaySound( "rust_pistol.shoot" );
+			ShootBullet( 0.05f, 1.5f, 9.0f, 3.0f );
 
-		ShootBullet( 0.05f, 1.5f, 9.0f, 3.0f );
-
-		AmmoCount = AmmoCount - 1;
+			AmmoCount = AmmoCount - 1;
+		}
+		else
+		{
+			//PlaySound( "rust_smg.dryfire" );
+		}
 	}
 
 	private void Discharge()

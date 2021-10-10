@@ -3,7 +3,7 @@
     left: 15px;
     top: 15px;
     padding: 5px;
-    background-color: rgba(0, 0, 0, .55);
+    background-color: rgba(0, 0, 0, .46);
     border: 2px solid rgba(0, 0, 0, .4);
     border-radius: 10px;
 }
@@ -13,7 +13,7 @@
     left: 15px;
     top: 75px;
     padding: 5px;
-    background-color: rgba(0, 0, 0, .55);
+    background-color: rgba(0, 0, 0, .46);
     border: 2px solid rgba(0, 0, 0, .4);
     border-radius: 10px;
 }
@@ -23,7 +23,7 @@
     left: 15px;
     bottom: 75px;
     padding: 5px;
-    background-color: rgba(0, 0, 0, .55);
+    background-color: rgba(0, 0, 0, .46);
     border: 2px solid rgba(0, 0, 0, .4);
     border-radius: 10px;
 }
@@ -33,7 +33,7 @@
     left: 15px;
     bottom: 15px;
     padding: 5px;
-    background-color: rgba(0, 0, 0, .55);
+    background-color: rgba(0, 0, 0, .46);
     border: 2px solid rgba(0, 0, 0, .4);
     border-radius: 10px;
 }
@@ -45,41 +45,6 @@
 
 .text2 {
     color: lightskyblue;
-    font-size: 30px;
-}
-
-.healthText {
-    color: red;
-    font-size: 30px;
-}
-
-.ammoText {
-    color: orangered;
-    font-size: 30px;
-}
-
-.healthBG {
-    position: absolute;
-    left: 15px;
-    bottom: 75px;
-    padding: 5px;
-    background-color: rgba(0, 0, 0, .55);
-    border: 2px solid rgba(0, 0, 0, .4);
-    border-radius: 10px;
-}
-
-.ammoBG {
-    position: absolute;
-    left: 15px;
-    bottom: 15px;
-    padding: 5px;
-    background-color: rgba(0, 0, 0, .55);
-    border: 2px solid rgba(0, 0, 0, .4);
-    border-radius: 10px;
-}
-
-.text {
-    color: white;
     font-size: 30px;
 }
 

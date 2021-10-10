@@ -41,6 +41,8 @@ public partial class Weapon : BaseWeapon, IUse
 		base.ActiveStart( ent );
 
 		TimeSinceDeployed = 0;
+
+		IsReloading = false;
 	}
 
 	public override void Reload()
@@ -48,7 +50,7 @@ public partial class Weapon : BaseWeapon, IUse
 		if ( IsReloading )
 			return;
 
-		if (AmmoCount < MaxAmmoCount && !IsReloading)
+		if (AmmoCount < MaxAmmoCount)
 		{
 			TimeSinceReload = 0;
 			IsReloading = true;
@@ -78,6 +80,7 @@ public partial class Weapon : BaseWeapon, IUse
 	public virtual void OnReloadFinish()
 	{
 		IsReloading = false;
+
 		AmmoCount = MaxAmmoCount;
 	}
 
