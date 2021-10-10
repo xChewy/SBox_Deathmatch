@@ -9,6 +9,8 @@ namespace ChewyDeathmatch
 		{
 			if ( !IsClient ) return;
 
+			RootPanel.SetTemplate( "/ui/PlayerHud.html" );
+
 			RootPanel.AddChild<PlayerHud>();
 			RootPanel.AddChild<ChatBox>();
 			RootPanel.AddChild<VoiceList>();
