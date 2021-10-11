@@ -37,7 +37,7 @@ namespace ChewyDeathmatch
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			Controller = new WalkController();
+			Controller = new DeathmatchWalkController();
 			Animator = new StandardPlayerAnimator();
 
 			MainCamera = LastCamera;
@@ -50,7 +50,7 @@ namespace ChewyDeathmatch
 
 			Clothing.DressEntity( this );
 
-			Inventory.Add( new SMG(), true );
+			Inventory.Add( new WaterPipe(), true );
 			Inventory.Add( new Pistol() );
 
 			base.Respawn();
@@ -77,9 +77,9 @@ namespace ChewyDeathmatch
 		{
 			base.OnKilled();
 			
-			LastCamera = MainCamera;
-			MainCamera = new SpectateRagdollCamera();
-			Camera = MainCamera;
+			//LastCamera = MainCamera;
+			//MainCamera = new SpectateRagdollCamera();
+			//Camera = MainCamera;
 			Controller = null;
 
 			EnableAllCollisions = false;

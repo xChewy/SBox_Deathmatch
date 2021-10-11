@@ -12,6 +12,8 @@ namespace ChewyDeathmatch
 			RootPanel.SetTemplate( "/ui/PlayerHud.html" );
 
 			RootPanel.AddChild<PlayerHud>();
+			RootPanel.AddChild<WeaponMenu>();
+
 			RootPanel.AddChild<ChatBox>();
 			RootPanel.AddChild<VoiceList>();
 			RootPanel.AddChild<KillFeed>();

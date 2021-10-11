@@ -2,15 +2,15 @@ using Sandbox;
 
 // Taken from https://github.com/Facepunch/sandbox/
 
-[Library( "weapon_pistol", Title = "Pistol", Spawnable = true )]
-partial class Pistol : Weapon
+[Library( "weapon_pistol", Title = "Waterpipe Shotgun", Spawnable = true )]
+partial class WaterPipe : Weapon
 {
-	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";
+	public override string ViewModelPath => "weapons/rust_shotgun/v_rust_shotgun.vmdl";
 
-	public override int MaxAmmoCount => 10;
+	public override int MaxAmmoCount => 1;
 	public override float PrimaryRate => 15.0f;
 	public override float SecondaryRate => 1.0f;
-	public override float ReloadTime => 3.4f;
+	public override float ReloadTime => 5.1f;
 
 	public TimeSince TimeSinceDischarge { get; set; }
 
@@ -18,7 +18,7 @@ partial class Pistol : Weapon
 	{
 		base.Spawn();
 
-		SetModel( "weapons/rust_pistol/rust_pistol.vmdl" );
+		SetModel( "weapons/rust_shotgun/rust_shotgun.vmdl" );
 
 		AmmoCount = MaxAmmoCount;
 	}
@@ -38,9 +38,9 @@ partial class Pistol : Weapon
 			(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
 
 			ShootEffects();
-			PlaySound( "rust_pistol.shoot" );
+			PlaySound( "rust_shotgun.shoot" );
 
-			ShootBullet( 0.05f, 1.5f, 11.5f, 3.0f );
+			ShootBullets( 6, 0.20f, 1.5f, 18.0f, 3.0f );
 
 			AmmoCount = AmmoCount - 1;
 		}
@@ -52,7 +52,7 @@ partial class Pistol : Weapon
 
 	public override void SimulateAnimator( PawnAnimator anim )
 	{
-		anim.SetParam( "holdtype", 1 );
+		anim.SetParam( "holdtype", 3 );
 		anim.SetParam( "aimat_weight", 1.0f );
 		anim.SetParam( "holdtype_handedness", 0 );
 	}

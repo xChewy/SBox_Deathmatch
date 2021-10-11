@@ -33,7 +33,7 @@ partial class SMG : Weapon
 			ShootEffects();
 			PlaySound( "rust_smg.shoot" );
 
-			ShootBullet( 0.1f, 1.5f, 8.0f, 3.0f );
+			ShootBullet( 0.1f, 1.5f, 9.0f, 3.0f );
 
 			AmmoCount = AmmoCount - 1;
 		}

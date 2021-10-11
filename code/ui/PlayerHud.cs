@@ -44,6 +44,8 @@ public class PlayerHud : Panel
 		var weapon = Local.Pawn.ActiveChild as Weapon;
 		SetClass( "active", weapon != null );
 
+		if ( weapon == null ) return;
+
 		Frags.Text = $"{Local.Client.GetInt( "Kills" )}";
 
 		Deaths.Text = $"{Local.Client.GetInt( "Deaths" )}";
